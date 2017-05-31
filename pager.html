@@ -1,0 +1,31 @@
+<h2> total pages: {{ $ctrl.pager.total }} </h2>
+<form class="filters">
+  <label> {{ $ctrl.t.Mail }}
+    <input type="text" ng-model="$ctrl.filter.email" />
+  </label>
+  <label> {{ $ctrl.t.child_name }}
+    <input type="text" ng-model="$ctrl.filter.child" />
+  </label>
+  <label> {{ $ctrl.t.video_done }}
+    <input type="checkbox" ng-model="$ctrl.filter.done" />
+  </label>
+  <label> {{ $ctrl.t.video_uploaded }}
+    <input type="checkbox" ng-model="$ctrl.filter.uploaded" />
+  </label>
+  <label> {{ $ctrl.t.notified }}
+    <input type="checkbox" ng-model="$ctrl.filter.notified" />
+  </label>
+  <button ng-click="$ctrl.filterRows()"> {{ $ctrl.t.Filter }} </button>
+</form>
+<div class="pagination">
+  <ul ng-click="$ctrl.openPage($event)">
+    <li ng-if="$ctrl.pager.first_page"> First </li>
+    <li ng-repeat="is_active in $ctrl.pager.pages track by $index" 
+      data-page="{{ $index }}"
+      ng-class="{active: is_active}"
+      >
+      <a> {{ $index+1 }} </a>
+    </li>
+    <li ng-if="$ctrl.pager.last_page" data-page="{{ $ctrl.pager.total - 1 }}"> Last </li>
+  </ul>
+</div>

@@ -1,0 +1,81 @@
+<div class="first-grade-panel" ng-include="'views/pager-1.html'"> </div>
+
+<table class="table-list first-grade" ng-click="$ctrl.editRow($event)">
+  <tr>
+    <th> {{ $ctrl.t.child_name }} </th>
+    <th> {{ $ctrl.t.Mail }} </th>
+    <th> {{ $ctrl.t.Requester }} </th>
+    <th> {{ $ctrl.t.video_done }} </th>
+    <th> {{ $ctrl.t.video_uploaded }} </th>
+    <th> {{ $ctrl.t.notified }} </th>
+  </tr>
+  <tr ng-repeat="request in $ctrl.requests" data-id="{{ request.id }}">
+    <td> {{ request.child_name }}</td>
+    <td> {{ request.mail }} </td>
+    <td> {{ request.name }} </td>
+    <td ng-if="request.video_done"> {{ $ctrl.t.yes }} </td>
+    <td ng-if="!request.video_done"> {{ $ctrl.t.no }} </td>
+    <td ng-if="request.video_uploaded"> {{ $ctrl.t.yes }} </td>
+    <td ng-if="!request.video_uploaded"> {{ $ctrl.t.no }} </td>
+    <td> {{ request.notified }} </td>
+  </tr>
+</table>
+
+<form ng-show="$ctrl.selectedId();" class="first-grade-request">
+  <h1> <span ng-click="$ctrl.cancelRow()">X</span> 
+    <a href="/alef2016/{{$ctrl.request.id}}" target="_blank"> {{ $ctrl.request.child_name }} </a> 
+  </h1>
+  <p> {{ $ctrl.formMessage }} </p>
+  <fieldset class="admin">
+    <legend> {{ $ctrl.t.Admin }} </legend>
+    <label> {{ $ctrl.t.video_done }}
+      <input type="checkbox" ng-model="$ctrl.request.video_done" />
+    </label>
+    <label> {{ $ctrl.t.video_uploaded }}
+      <input type="checkbox" ng-model="$ctrl.request.video_uploaded" />
+    </label>
+    <label> {{ $ctrl.t.request_newsletter }}
+      <input disabled type="checkbox" ng-model="$ctrl.request.newsletter" />
+    </label>
+    <label class="go-live cleared"> {{ $ctrl.t.go_live_url }}
+      <input type="text" ng-model="$ctrl.request.go_live_url" />
+    </label>
+    <div class="cleared" ng-if="$ctrl.request.notified != null">
+      {{ $ctrl.t.client_notified_at }} : {{ $ctrl.request.notified }}
+    </div>
+    <div class="cleared" ng-if="$ctrl.request.notified == null">
+      {{ $ctrl.t.client_not_notified }}
+    </div>
+    <label>
+      {{ $ctrl.t.client_new_notification }}
+      <input type="checkbox" ng-model="$ctrl.request.new_notification" />
+    </label>
+  </fieldset>
+  <fieldset class="basic">
+    <legend> {{ $ctrl.t.Info }} </legend>
+    <label> {{ $ctrl.t.parent_name }} <input type="text" ng-model="$ctrl.request.name"/> </label>
+    <label> {{ $ctrl.t.Mail }} <input type="text" ng-model="$ctrl.request.mail"/> </label>
+    <label> {{ $ctrl.t.child_name }} <input type="text" ng-model="$ctrl.request.child_name"/> </label>
+    <div class="gender-wrapper"> 
+      {{ $ctrl.t.Gender }} 
+      <label> 
+        <input type="radio" ng-model="$ctrl.request.gender" value="0"/>
+        {{ $ctrl.t.Boy }}
+      </label>
+      <label>
+        <input type="radio" ng-model="$ctrl.request.gender" value="1"/>
+        {{ $ctrl.t.Girl }}
+      </label>
+    </div>
+    <label> {{ $ctrl.t.Image }} </label>
+    <img ng-src="{{ $ctrl.request.image }}" />
+    <div class="greeting-wrapper">
+      <label> {{ $ctrl.t.Greeting }} </label>
+      <textarea rows="4" ng-model="$ctrl.request.greeting"> </textarea> 
+    </div>
+  </fieldset>
+  <div class="actions">
+    <button ng-click="$ctrl.saveRequest()"> {{ $ctrl.t.Save }} </button>
+    <button ng-click="$ctrl.cancelRow()"> {{ $ctrl.t.Cancel }} </button>
+  </div>
+</form>

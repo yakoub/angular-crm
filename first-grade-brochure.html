@@ -1,0 +1,38 @@
+<div ng-include="'views/pager-brochure.html'"> </div>
+
+<table class="table-list first-grade" ng-click="$ctrl.editRow($event)">
+  <tr>
+    <th> {{ $ctrl.t.Requester }} </th>
+    <th> {{ $ctrl.t.Mail }} </th>
+    <th> {{ $ctrl.t.Address }} </th>
+    <th> {{ $ctrl.t.Phone }} </th>
+    <th> {{ $ctrl.t.brochure_sent }} </th>
+  </tr>
+  <tr ng-repeat="request in $ctrl.requests" data-id="{{ request.id }}">
+    <td> {{ request.name }} </td>
+    <td> {{ request.mail }} </td>
+    <td> {{ request.address }} </td>
+    <td> {{ request.phone }} </td>
+    <td ng-if="request.sent"> {{ $ctrl.t.yes }} </td>
+    <td ng-if="!request.sent"> {{ $ctrl.t.no }} </td>
+  </tr>
+</table>
+
+<form ng-show="$ctrl.selectedId();" class="first-grade-request">
+  <h1> <span ng-click="$ctrl.cancelRow()">X</span> {{ $ctrl.request.name }} </h1>
+  <p> {{ $ctrl.formMessage }} </p>
+  <label> {{ $ctrl.t.brochure_sent }}
+    <input type="checkbox" ng-model="$ctrl.request.sent" />
+  </label>
+  <label> {{ $ctrl.t.request_newsletter }}
+    <input disabled type="checkbox" ng-model="$ctrl.request.newsletter" />
+  </label>
+  <label> {{ $ctrl.t.parent_name }} <input type="text" ng-model="$ctrl.request.name"/> </label>
+  <label> {{ $ctrl.t.Mail }} <input type="text" ng-model="$ctrl.request.mail"/> </label>
+  <label> {{ $ctrl.t.Address }} <input type="text" ng-model="$ctrl.request.address"/> </label>
+  <label> {{ $ctrl.t.Phone }} <input type="text" ng-model="$ctrl.request.phone"/> </label>
+  <div class="actions">
+    <button ng-click="$ctrl.saveRequest()"> {{ $ctrl.t.Save }} </button>
+    <button ng-click="$ctrl.cancelRow()"> {{ $ctrl.t.Cancel }} </button>
+  </div>
+</form>
